@@ -5,30 +5,22 @@ import { Statistics } from "./Statistics/Statistics ";
 import { Notification } from "./Notification/Notification";
 
 const App = () => {
-  // state = {
-  //   Good: 0,
-  //   Neutral: 0,
-  //   Bad: 0,
-  // };
-
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
-  // const onLeaveFeedback = (e) => {
-  //   const name = e.target.name;
-  //   return this.setState((prevState) => ({
-  //     [name]: prevState[name] + 1,
-  //   }));
-  // };
-  const neutralFeedback = () => {
-    setNeutral((prev) => prev + 1);
-  };
-  const badFeedback = () => {
-    setBad((prev) => prev + 1);
-  };
-  const goodFeedback = () => {
-    setGood((prev) => prev + 1);
+  const onLeaveFeedback = (e) => {
+    const name = e.target.name;
+    if (name === "Good") {
+      setGood((prev) => prev + 1);
+      return;
+    } else if (name === "Neutral") {
+      setNeutral((prev) => prev + 1);
+      return;
+    } else {
+      setBad((prev) => prev + 1);
+      return;
+    }
   };
 
   const countTotalFeedback = () => {
@@ -46,9 +38,8 @@ const App = () => {
     >
       <Section title={"Please leave feedback"}>
         <FeedbackOptions
-          badFeedback={badFeedback}
-          goodFeedback={goodFeedback}
-          neutralFeedback={neutralFeedback}
+          onLeaveFeedback={onLeaveFeedback}
+          options={["Good", "Neutral", "Bad"]}
         />
       </Section>
       {countTotalFeedback() === 0 ? (
